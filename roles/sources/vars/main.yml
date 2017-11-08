@@ -1,0 +1,4 @@
+---
+src_sourceslist: sources.list.j2
+deb_sourceslist: /etc/apt/sources.list
+bak_sourceslist: /etc/apt/sources.list.bak

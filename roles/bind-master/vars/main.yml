@@ -1,0 +1,7 @@
+---
+bind_user: bind
+bind_group: bind
+umask: 0750
+bind_dir: /etc/bind
+namedfile_local: /etc/bind/named.conf.local
+src_namedfile_local: master-named.conf.local.j2

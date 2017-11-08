@@ -1,0 +1,10 @@
+---
+bind_user: bind
+bind_group: bind
+umask: 0750
+db_mondomainelan: /etc/bind/db.mondomaine.lan
+db_mondomainelan_inv: /etc/bind/db.mondomaine.lan.inv
+src_mondomainelan: db.mondomaine.lan.j2
+src_mondomainelan_inv: db.mondomaine.lan.inv.j2
+namedfile_bak: /etc/bind/named.conf.local.bak
+namedfile_local: /etc/bind/named.conf.local

@@ -1,0 +1,4 @@
+---
+src_resolv: resolv.conf.j2
+deb_resolv: /etc/resolv.conf
+bak_resolv: /etc/resolv.conf.bak

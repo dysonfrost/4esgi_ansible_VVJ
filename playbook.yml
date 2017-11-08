@@ -1,0 +1,26 @@
+---
+- name: Installation des serveurs bind
+  hosts: dnsservers
+  remote_user: root
+  vars:
+    user: bind
+
+  roles:
+    - sources
+    - sudo
+    - user
+    - utils
+    - resolv
+    - bind-default
+
+- import_playbook: playbook-master.yml
+- import_playbook: playbook-slave.yml
+
+#todo:
+#  droits 0600 de bind sur /etc/bind
+#  test supprimer les fichiers db.[...] du serveur secondaire
+#  ajouter networking
+#  ajouter firewalling (iptables)
+#  ajouter verifications
+#  comprendre les variables
+...

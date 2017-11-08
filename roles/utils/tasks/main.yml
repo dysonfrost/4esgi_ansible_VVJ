@@ -1,0 +1,7 @@
+---
+- name: Installation des paquets de base
+  apt: name={{ item }} state=latest
+  with_items:
+    - vim
+    - dnsutils
+    - bind9

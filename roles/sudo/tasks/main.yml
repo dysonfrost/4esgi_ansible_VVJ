@@ -1,0 +1,3 @@
+---
+- name: Installation du paquet sudo
+  apt: name=sudo state=latest

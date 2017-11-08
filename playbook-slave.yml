@@ -1,0 +1,11 @@
+---
+- name: Installation du serveur slave
+  hosts: slave
+  remote_user: root
+  vars:
+    user: bind
+
+  roles:
+    - bind-slave
+
+...
