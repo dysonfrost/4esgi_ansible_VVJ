@@ -1,6 +1,6 @@
 ---
-- name: bind9 reload
+- name: ssh reload
   service:
-    name: bind9
+    name: ssh
     state: reloaded
   become: true

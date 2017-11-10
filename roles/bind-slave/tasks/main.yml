@@ -2,14 +2,14 @@
 - stat:
     path: "{{ namedfile_local }}"
   register: namedconf_local
+  become: true
+
 - name: Copie du modèle named.conf.local vers le serveur slave
   template:
     src: "{{ src_namedfile_local }}"
     dest: "{{ namedfile_local }}"
     force: yes
-    owner: "{{ bind_user }}"
-    group: "{{ bind_group }}"
-    mode: "{{ umask }}"
+  become: true
   when: namedconf_local.stat.exists == False
 
 - name: "{{ bind_user }} propriétaire du répertoire {{ bind_dir }}"
@@ -19,4 +19,5 @@
     mode: "{{ umask }}"
     owner: "{{ bind_user }}"
     group: "{{ bind_group }}"
-  notify: bind9 restart
+  become: true
+  notify: bind9 reload

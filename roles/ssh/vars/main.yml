@@ -1,0 +1,8 @@
+---
+deploy_user: esgi
+dir_sudoers: /etc/sudoers.d
+sshd_config: /etc/ssh/sshd_config
+visudo: visudo -cf %s
+src_sudoers: src_sudoers.j2
+regex_permrootlog: ^PermitRootLogin
+permit_no: PermitRootLogin no

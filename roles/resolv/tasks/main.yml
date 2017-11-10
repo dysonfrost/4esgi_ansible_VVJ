@@ -1,13 +1,24 @@
 ---
-- stat: path={{ deb_resolv }}
+- stat:
+    path: "{{ deb_resolv }}"
   register: etc_resolvconf
+  become: true
+
 - name: Conserve une copie du fichier resolv.conf
   command: mv {{ deb_resolv }} {{ bak_resolv }}
+  become: true
   when: etc_resolvconf.stat.exists == True
 
 
-- stat: path={{ deb_resolv }}
+- stat:
+    path: "{{ deb_resolv }}"
   register: etc_resolvconf
+  become: true
+
 - name: Copie du modèle resolv.conf vers les serveurs distants
-  template: src={{ src_resolv }} dest={{ deb_resolv }} force=yes
+  template:
+    src: "{{ src_resolv }}"
+    dest: "{{ deb_resolv }}"
+    force: yes
+  become: true
   when: etc_resolvconf.stat.exists == False

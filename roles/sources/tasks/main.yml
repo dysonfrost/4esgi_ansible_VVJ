@@ -1,16 +1,45 @@
 ---
-- stat: path={{ deb_sourceslist }}
+- stat:
+    path: "{{ deb_sourceslist }}"
   register: apt_sourceslist
 - name: Conserve une copie du fichier sources.list
   command: mv {{ deb_sourceslist }} {{ bak_sourceslist }}
-  when: apt_sourceslist.stat.exists == True
+  become_method: su
+  become: true
+  when: apt_sourceslist.stat.exists == True and ansible_os_family == 'Debian'
 
-- stat: path={{ deb_sourceslist }}
+- stat:
+    path: "{{ deb_sourceslist }}"
   register: apt_sourceslist
 - name: Copie du modèle sources.list vers les serveurs distants
-  template: src={{ src_sourceslist }} dest={{ deb_sourceslist }} force=yes
-  when: apt_sourceslist.stat.exists == False
+  template:
+    src: "{{ src_sourceslist }}"
+    dest: "{{ deb_sourceslist }}"
+    force: yes
+  become_method: su
+  become: true
+  when: apt_sourceslist.stat.exists == False and ansible_os_family == 'Debian'
 
-- name: Mise à jour des sources
+- name: Mise à jour des repositories apt
   #apt: update_cache=yes ### Timeout si script rejoué
   command: apt-get update
+  become_method: su
+  become: true
+  when: ansible_os_family == 'Debian'
+
+
+- name: Ajout d'un serveur DNS Google (temporairement)
+  lineinfile:
+    path: "{{centos_ifcfg_file}}-{{ ansible_default_ipv4.interface }}"
+    line: "{{ DNS1 }}"
+  when: ansible_os_family == 'RedHat'
+  become_method: su
+  become: true
+  notify: network restart
+
+
+- name: Nettoyer le cache yum
+  command: yum clean expire-cache
+  when: ansible_os_family == 'RedHat'
+  become_method: su
+  become: true

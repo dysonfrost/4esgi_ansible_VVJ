@@ -1,3 +1,7 @@
 ---
 - name: Installation du paquet sudo
-  apt: name=sudo state=latest
+  apt:
+    name: sudo
+    state: latest
+  become_method: su
+  become: true

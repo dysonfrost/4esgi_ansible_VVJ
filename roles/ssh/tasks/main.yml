@@ -1,0 +1,26 @@
+---
+- name: Ajout de la clé SSH
+  when: deploy_user is defined
+  authorized_key:
+    user: "{{ deploy_user }}"
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  become_method: su
+  become: true
+
+- name: "{{ deploy_user }} devient sudoer"
+  when: deploy_user is defined
+  template:
+    src: "{{ src_sudoers }}"
+    dest: "{{ dir_sudoers }}/{{ deploy_user }}-sudoer"
+    validate: "{{ visudo }}"
+  become_method: su
+  become: true
+
+- name: Désactive accès SSH pour root
+  lineinfile:
+    dest: "{{ sshd_config }}"
+    regexp: "{{ regex_permrootlog }}"
+    line: "{{ permit_no }}"
+    state: present
+  become: true
+  notify: ssh reload

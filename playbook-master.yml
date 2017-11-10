@@ -1,9 +1,7 @@
 ---
 - name: Installation du serveur master
   hosts: master
-  remote_user: root
-  vars:
-    user: bind
+  remote_user: esgi
 
   roles:
     - bind-master

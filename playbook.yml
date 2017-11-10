@@ -1,14 +1,17 @@
 ---
 - name: Installation des serveurs bind
   hosts: dnsservers
-  remote_user: root
-  vars:
-    user: bind
+  remote_user: esgi
+  become_user: root
+
+
+#  vars:
+#    user: bind
 
   roles:
     - sources
     - sudo
-    - user
+    - ssh
     - utils
     - resolv
     - bind-default

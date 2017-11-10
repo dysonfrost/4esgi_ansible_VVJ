@@ -1,0 +1,6 @@
+---
+package:
+  - vim
+  - dnsutils
+  #- policykit-1
+  - bind9

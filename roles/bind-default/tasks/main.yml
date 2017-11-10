@@ -2,32 +2,32 @@
 - stat:
     path: "{{ db_mondomainelan }}"
   register: db_mondomaine_lan
+  become: true
 - name: Copie du fichier 'db.mondomaine.lan'
   template:
     src: "{{ src_mondomainelan }}"
     dest: "{{ db_mondomainelan }}"
     force: yes
-    owner: "{{ bind_user }}"
-    group: "{{ bind_group }}"
-    mode: "{{ umask }}"
+  become: true
   when: db_mondomaine_lan.stat.exists == False
 
 - stat:
     path: "{{ db_mondomainelan_inv }}"
   register: db_mondomaine_lan_inv
+  become: true
 - name: Copie du fichier 'db.mondomaine.lan.inv'
   template:
     src: "{{ src_mondomainelan_inv }}"
     dest: "{{ db_mondomainelan_inv }}"
     force: yes
-    owner: "{{ bind_user }}"
-    group: "{{ bind_group }}"
-    mode: "{{ umask }}"
+  become: true
   when: db_mondomaine_lan_inv.stat.exists == False
 
 - stat:
     path: "{{ namedfile_local }}"
   register: namedconf_local
+  become: true
 - name: Conserve une copie du fichier named.conf.local
   command: mv  {{ namedfile_local }} {{ namedfile_bak }}
+  become: true
   when: namedconf_local.stat.exists == True
