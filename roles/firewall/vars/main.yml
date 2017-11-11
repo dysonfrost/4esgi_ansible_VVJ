@@ -1,0 +1,6 @@
+rulesv6_deb: /etc/iptables/rules.v6
+rulesv4_deb: /etc/iptables/rules.v4
+rulesv6_centos: /etc/sysconfig/ip6tables
+rulesv4_centos: /etc/sysconfig/iptables
+src_rulesv6: src_rulesv6.j2
+src_rulesv4: src_rulesv4.j2

@@ -4,3 +4,18 @@
     name: bind9
     state: reloaded
   become: true
+  when: ansible_os_family == 'Debian'
+
+- name: named enable
+  service:
+    name: named
+    state: enabled
+  become: true
+  when: ansible_os_family == 'RedHat'
+
+- name: named start
+  service:
+    name: named
+    state: started
+  become: true
+  when: ansible_os_family == 'RedHat'

@@ -1,29 +1,19 @@
 ---
-- name: Installation des serveurs bind
+- name: Installation des serveurs dns bind
   hosts: dnsservers
   remote_user: esgi
   become_user: root
-
-
-#  vars:
-#    user: bind
 
   roles:
     - sources
     - sudo
     - ssh
     - utils
+    - firewall
     - resolv
     - bind-default
 
 - import_playbook: playbook-master.yml
 - import_playbook: playbook-slave.yml
-
-#todo:
-#  droits 0600 de bind sur /etc/bind
-#  test supprimer les fichiers db.[...] du serveur secondaire
-#  ajouter networking
-#  ajouter firewalling (iptables)
-#  ajouter verifications
-#  comprendre les variables
+- import_playbook: playbook-check.yml
 ...

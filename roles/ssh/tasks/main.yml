@@ -12,7 +12,7 @@
   template:
     src: "{{ src_sudoers }}"
     dest: "{{ dir_sudoers }}/{{ deploy_user }}-sudoer"
-    validate: "{{ visudo }}"
+  #  validate: visudo -cf %s ### Bug déclaré: Ne prend pas en compte 'become:'
   become_method: su
   become: true
 
@@ -23,4 +23,10 @@
     line: "{{ permit_no }}"
     state: present
   become: true
-  notify: ssh reload
+
+- name: Restart SSH
+# bug du service SSH depuis ansible 1.9.1: https://github.com/ansible/ansible-modules-core/issues/1533
+  shell: sleep 3; /etc/init.d/sshd restart
+  async: 1
+  poll: 0
+  become: true

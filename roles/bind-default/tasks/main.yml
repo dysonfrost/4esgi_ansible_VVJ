@@ -1,33 +1,66 @@
 ---
 - stat:
-    path: "{{ db_mondomainelan }}"
-  register: db_mondomaine_lan
+    path: "{{ db_mondomainelan_deb }}"
+  register: db_mondomaine_deb
   become: true
-- name: Copie du fichier 'db.mondomaine.lan'
+- name: Copie du fichier 'db.mondomaine.lan' (Debian)
   template:
     src: "{{ src_mondomainelan }}"
-    dest: "{{ db_mondomainelan }}"
+    dest: "{{ db_mondomainelan_deb }}"
     force: yes
   become: true
-  when: db_mondomaine_lan.stat.exists == False
+  when: db_mondomaine_deb.stat.exists == False and ansible_os_family == 'Debian'
 
 - stat:
-    path: "{{ db_mondomainelan_inv }}"
-  register: db_mondomaine_lan_inv
+    path: "{{ db_mondomainelan_inv_deb }}"
+  register: db_mondomaine_inv_deb
   become: true
-- name: Copie du fichier 'db.mondomaine.lan.inv'
+- name: Copie du fichier 'db.mondomaine.lan.inv' (Debian)
   template:
     src: "{{ src_mondomainelan_inv }}"
-    dest: "{{ db_mondomainelan_inv }}"
+    dest: "{{ db_mondomainelan_inv_deb }}"
     force: yes
   become: true
-  when: db_mondomaine_lan_inv.stat.exists == False
+  when: db_mondomaine_inv_deb.stat.exists == False and ansible_os_family == 'Debian'
+
+- stat:
+    path: "{{ db_mondomainelan_centos }}"
+  register: db_mondomaine_lan_centos
+  become: true
+- name: Copie du fichier 'db.mondomaine.lan' (CentOS)
+  template:
+    src: "{{ src_mondomainelan }}"
+    dest: "{{ db_mondomainelan_centos }}"
+    force: yes
+  become: true
+  when: db_mondomaine_lan_centos.stat.exists == False and ansible_os_family == 'RedHat'
+
+- stat:
+    path: "{{ db_mondomainelan_inv_centos }}"
+  register: db_mondomaine_lan_inv_centos
+  become: true
+- name: Copie du fichier 'db.mondomaine.lan.inv' (CentOS)
+  template:
+    src: "{{ src_mondomainelan_inv }}"
+    dest: "{{ db_mondomainelan_inv_centos }}"
+    force: yes
+  become: true
+  when: db_mondomaine_lan_inv_centos.stat.exists == False and ansible_os_family == 'RedHat'
 
 - stat:
     path: "{{ namedfile_local }}"
   register: namedconf_local
   become: true
-- name: Conserve une copie du fichier named.conf.local
-  command: mv  {{ namedfile_local }} {{ namedfile_bak }}
+- name: Conserve une copie du fichier named.conf.local (Debian)
+  command: mv  {{ namedfile_local }} {{ namedfile_local_bak }}
   become: true
-  when: namedconf_local.stat.exists == True
+  when: namedconf_local.stat.exists == True and ansible_os_family == 'Debian'
+
+- stat:
+    path: "{{ namedfile_centos }}"
+  register: namedconf
+  become: true
+- name: Conserve une copie du fichier named.conf (CentOS)
+  command: mv  {{ namedfile_centos }} {{ namedfile_bak }}
+  become: true
+  when: namedconf.stat.exists == True and ansible_os_family == 'RedHat'

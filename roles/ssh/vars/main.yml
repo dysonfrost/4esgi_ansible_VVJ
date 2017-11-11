@@ -6,3 +6,4 @@ visudo: visudo -cf %s
 src_sudoers: src_sudoers.j2
 regex_permrootlog: ^PermitRootLogin
 permit_no: PermitRootLogin no
+esgi_nopasswd: 'esgi ALL=(ALL) NOPASSWD: ALL'

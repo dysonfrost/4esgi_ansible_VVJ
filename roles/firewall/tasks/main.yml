@@ -1,0 +1,53 @@
+---
+- name: Copie du modèle rules.v6 vers les serveurs distants (Debian)
+  template:
+    src: "{{ src_rulesv6 }}"
+    dest: "{{ rulesv6_deb }}"
+    force: yes
+  become: true
+  when: ansible_os_family == 'Debian'
+
+- name: Copie du modèle rules.v4 vers les serveurs distants (CentOS)
+  template:
+    src: "{{ src_rulesv4 }}"
+    dest: "{{ rulesv4_deb }}"
+    force: yes
+  become: true
+  when: ansible_os_family == 'Debian'
+
+- name: Redémarre le service netfilter-persistent
+  shell: |
+    sleep 3;/etc/init.d/netfilter-persistent restart
+  become: true
+  when: ansible_os_family == 'Debian'
+
+- name: Copie du modèle rules.v6 vers les serveurs distants (CentOS)
+  template:
+    src: "{{ src_rulesv6 }}"
+    dest: "{{ rulesv6_centos }}"
+    force: yes
+  become: true
+  when: ansible_os_family == 'RedHat'
+
+- name: Copie du modèle rules.v4 vers les serveurs distants (CentOS)
+  template:
+    src: "{{ src_rulesv4 }}"
+    dest: "{{ rulesv4_centos }}"
+    force: yes
+  become: true
+  when: ansible_os_family == 'RedHat'
+
+- name: Stop le service firewalld et démarre iptables (CentOS)
+  shell: |
+    systemctl stop firewalld && systemctl start iptables
+    systemctl start ip6tables
+  become: true
+  when: ansible_os_family == 'RedHat'
+
+- name: Désactive le service firewalld et active iptables (CentOS)
+  shell: |
+    systemctl disable firewalld && systemctl mask firewalld
+    systemctl enable iptables
+    systemctl enable ip6tables
+  become: true
+  when: ansible_os_family == 'RedHat'

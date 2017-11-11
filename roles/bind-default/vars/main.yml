@@ -1,7 +1,11 @@
 ---
-db_mondomainelan: /etc/bind/db.mondomaine.lan
-db_mondomainelan_inv: /etc/bind/db.mondomaine.lan.inv
+db_mondomainelan_deb: /etc/bind/db.mondomaine.lan
+db_mondomainelan_inv_deb: /etc/bind/db.mondomaine.lan.inv
+db_mondomainelan_centos: /var/named/db.mondomaine.lan
+db_mondomainelan_inv_centos: /var/named/db.mondomaine.lan.inv
 src_mondomainelan: db.mondomaine.lan.j2
 src_mondomainelan_inv: db.mondomaine.lan.inv.j2
-namedfile_bak: /etc/bind/named.conf.local.bak
 namedfile_local: /etc/bind/named.conf.local
+namedfile_centos: /etc/named.conf
+namedfile_local_bak: /etc/bind/named.conf.local.bak
+namedfile_bak: /etc/named.conf.bak

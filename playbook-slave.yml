@@ -1,5 +1,5 @@
 ---
-- name: Installation du serveur slave
+- name: Configuration bind du serveur slave
   hosts: slave
   remote_user: esgi
 

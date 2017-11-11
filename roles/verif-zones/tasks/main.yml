@@ -1,0 +1,30 @@
+---
+- name: Verification des logs (CentOS)
+  shell: |
+    sleep 5; cat {{ centos_log }}
+  become: true
+  register: resultat
+  when: "'slave_host' in group_names and ansible_os_family == 'RedHat'"
+
+- stat:
+    path: "{{ centos_log }}"
+  register: log_messages
+- name: Status du transfert de zones (CentOS)
+  when: "'slave_host' in group_names and log_messages.stat.exists == True and resultat.stdout.find('Transfer completed') != -1"
+  debug:
+    msg: "Transfer status success - Transfert de zones correctement configuré"
+
+- name: Verification des logs (Debian)
+  shell: |
+    sleep 5; cat {{ deb_log }}
+  become: true
+  register: resultat
+  when: "'slave_host' in group_names and ansible_os_family == 'Debian'"
+
+- stat:
+    path: "{{ deb_log }}"
+  register: log_syslog
+- name: Status du transfert de zones (Debian)
+  when: "'slave_host' in group_names and log_syslog.stat.exists == True and resultat.stdout.find('Transfer status{{ ':' }} success') != -1"
+  debug:
+    msg: "Transfer status success - Transfert de zone correctement configurés"

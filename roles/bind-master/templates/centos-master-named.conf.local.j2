@@ -10,13 +10,13 @@
 zone "mondomaine.lan" {
         type master;
         notify yes;
-        allow-transfer {192.168.1.11;};
-        file "/etc/bind/db.mondomaine.lan";
+        allow-transfer {192.168.1.12;};
+        file "/var/named/db.mondomaine.lan";
 };
 
 zone "1.168.192.in-addr.arpa" {
         type master;
         notify yes;
-        allow-transfer {192.168.1.11;};
-        file "/etc/bind/db.mondomaine.lan.inv";
+        allow-transfer {192.168.1.12;};
+        file "/var/named/db.mondomaine.lan.inv";
 };

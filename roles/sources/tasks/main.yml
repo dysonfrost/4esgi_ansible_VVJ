@@ -2,7 +2,7 @@
 - stat:
     path: "{{ deb_sourceslist }}"
   register: apt_sourceslist
-- name: Conserve une copie du fichier sources.list
+- name: Conserve une copie du fichier sources.list (Debian)
   command: mv {{ deb_sourceslist }} {{ bak_sourceslist }}
   become_method: su
   become: true
@@ -11,7 +11,7 @@
 - stat:
     path: "{{ deb_sourceslist }}"
   register: apt_sourceslist
-- name: Copie du modèle sources.list vers les serveurs distants
+- name: Copie du modèle sources.list vers les serveurs distants (Debian)
   template:
     src: "{{ src_sourceslist }}"
     dest: "{{ deb_sourceslist }}"
@@ -20,7 +20,7 @@
   become: true
   when: apt_sourceslist.stat.exists == False and ansible_os_family == 'Debian'
 
-- name: Mise à jour des repositories apt
+- name: Mise à jour des repositories apt (Debian)
   #apt: update_cache=yes ### Timeout si script rejoué
   command: apt-get update
   become_method: su
@@ -28,18 +28,17 @@
   when: ansible_os_family == 'Debian'
 
 
-- name: Ajout d'un serveur DNS Google (temporairement)
+- name: Modifie les paramètres de l'interface ethernet (centOS)
   lineinfile:
     path: "{{centos_ifcfg_file}}-{{ ansible_default_ipv4.interface }}"
     line: "{{ DNS1 }}"
   when: ansible_os_family == 'RedHat'
   become_method: su
   become: true
-  notify: network restart
 
-
-- name: Nettoyer le cache yum
-  command: yum clean expire-cache
+- name: Redémarre l'interface réseau (centOS)
+  #service: network restart ### Conflit avec Network-Manager
+  command: "{{ initd_netw }} restart"
   when: ansible_os_family == 'RedHat'
   become_method: su
   become: true

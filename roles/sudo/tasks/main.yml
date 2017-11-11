@@ -1,6 +1,6 @@
 ---
 - name: Installation du paquet sudo
-  apt:
+  package:
     name: sudo
     state: latest
   become_method: su

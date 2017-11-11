@@ -1,5 +1,5 @@
 ---
-- name: Installation du serveur master
+- name: Configuration bind du serveur master
   hosts: master
   remote_user: esgi
 

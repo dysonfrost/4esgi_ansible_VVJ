@@ -1,0 +1,10 @@
+---
+- name: Vérifie la configuration des serveurs
+  hosts: dnsservers
+  remote_user: esgi
+
+  roles:
+    - verif-zones
+    - verif-resolv
+
+...

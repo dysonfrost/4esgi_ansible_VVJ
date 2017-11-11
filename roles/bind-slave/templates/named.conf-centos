@@ -1,0 +1,11 @@
+// Generated from ansible.
+
+options {
+directory "/var/named";
+dump-file "/var/named/data/cache_dump.db";
+statistics-file "/var/named/data/named_stats.txt";
+};
+
+
+include "/etc/named.rfc1912.zones";
+include "/etc/named.conf.local";

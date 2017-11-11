@@ -1,0 +1,2 @@
+centos_log: /var/log/messages
+deb_log: /var/log/syslog

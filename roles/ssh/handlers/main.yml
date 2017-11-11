@@ -1,4 +1,6 @@
 ---
+# Inutilisé
+# bug du service SSH depuis ansible 1.9.1: https://github.com/ansible/ansible-modules-core/issues/1533
 - name: ssh reload
   service:
     name: ssh

@@ -1,7 +1,15 @@
 ---
 bind_user: bind
 bind_group: bind
-umask: 0777
+named_user: named
+named_group: named
+umask: 0750
+
 bind_dir: /etc/bind
-namedfile_local: /etc/bind/named.conf.local
-src_namedfile_local: master-named.conf.local.j2
+named_dir: /var/named
+namedfile_local_deb: /etc/bind/named.conf.local
+namedfile_local_centos: /etc/named.conf.local
+namedfile_centos: /etc/named.conf
+src_namedfile_local_deb: deb-master-named.conf.local.j2
+src_namedfile_local_centos: centos-master-named.conf.local.j2
+src_namedfile_centos: named.conf-centos

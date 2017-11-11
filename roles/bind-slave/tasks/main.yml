@@ -1,18 +1,41 @@
 ---
 - stat:
-    path: "{{ namedfile_local }}"
-  register: namedconf_local
+    path: "{{ namedfile_local_deb }}"
+  register: namedconf_local_deb
   become: true
-
-- name: Copie du modèle named.conf.local vers le serveur slave
+- name: Copie du modèle named.conf.local vers le serveur slave (Debian)
   template:
-    src: "{{ src_namedfile_local }}"
-    dest: "{{ namedfile_local }}"
+    src: "{{ src_namedfile_local_deb }}"
+    dest: "{{ namedfile_local_deb }}"
     force: yes
   become: true
-  when: namedconf_local.stat.exists == False
+  when: namedconf_local_deb.stat.exists == False and ansible_os_family == 'Debian'
 
-- name: "{{ bind_user }} propriétaire du répertoire {{ bind_dir }}"
+- stat:
+    path: "{{ namedfile_centos }}"
+  become: true
+  register: namedconf_centos
+- name: Copie du modèle named.conf vers le serveur master (CentOS)
+  template:
+    src: "{{ src_namedfile_centos }}"
+    dest: "{{ namedfile_centos }}"
+    force: yes
+  become: true
+  when: namedconf_centos.stat.exists == False and ansible_os_family == 'RedHat'
+
+- stat:
+    path: "{{ namedfile_local_centos }}"
+  become: true
+  register: namedconf_local_centos
+- name: Copie du modèle named.conf.local vers le serveur master (CentOS)
+  template:
+    src: "{{ src_namedfile_local_centos }}"
+    dest: "{{ namedfile_local_centos }}"
+    force: yes
+  become: true
+  when: namedconf_local_centos.stat.exists == False and ansible_os_family == 'RedHat'
+
+- name: "{{ bind_user }} devient compte de service (Debian)"
   file:
     path: "{{ bind_dir }}"
     recurse: yes
@@ -21,3 +44,28 @@
     group: "{{ bind_group }}"
   become: true
   notify: bind9 reload
+  when: ansible_os_family == 'Debian'
+
+- name: "{{ named_user }} devient compte de service (CentOS)"
+  shell: |
+    chown -R {{ named_user }}:{{ named_group }} {{ named_dir }}
+    chmod -R 0750 {{ named_dir }}
+    chown  {{ named_user }}:{{ named_group }} {{ namedfile_local_centos }}
+    chmod  750 {{ namedfile_local_centos }}
+    chown  {{ named_user }}:{{ named_group }} {{ namedfile_centos }}
+    chmod  750 {{ namedfile_centos }}
+  become: true
+  with_items: "{{ named_dir }}"
+  when: ansible_os_family == 'RedHat'
+
+- name: Desactive SELinux (CentOS)
+  command: setenforce 0
+  become: true
+  when: ansible_os_family == 'RedHat'
+
+- name: Active puis démarre le service named (CentOS)
+  shell: sleep 3; systemctl enable named; sleep 3; systemctl start named
+  async: 1
+  poll: 0
+  become: true
+  when: ansible_os_family == 'RedHat'

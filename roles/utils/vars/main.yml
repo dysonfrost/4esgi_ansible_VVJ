@@ -1,6 +1,12 @@
 ---
-package:
+centos_pkg:
   - vim
-  - dnsutils
-  #- policykit-1
+  - bind
+  - bind-utils
+  - iptables-services
+
+deb_pkg:
+  - vim
   - bind9
+  - dnsutils
+  - iptables-persistent

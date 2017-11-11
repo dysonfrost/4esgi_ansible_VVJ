@@ -9,7 +9,6 @@
   become: true
   when: etc_resolvconf.stat.exists == True
 
-
 - stat:
     path: "{{ deb_resolv }}"
   register: etc_resolvconf
@@ -22,3 +21,26 @@
     force: yes
   become: true
   when: etc_resolvconf.stat.exists == False
+
+- name: Modifie resolv.conf avec Network-Manager (centOS)
+  blockinfile:
+    path: "{{centos_ifcfg_file}}-{{ ansible_default_ipv4.interface }}"
+    insertafter: "{{ old_dns }}"
+    block: "{{ add_dns }}"
+  when: ansible_os_family == 'RedHat'
+  become: true
+
+- name: Supprime la derniere ligne du fichier ifcfg-<int>
+  lineinfile:
+    path: "{{centos_ifcfg_file}}-{{ ansible_default_ipv4.interface }}"
+    line: "{{ old_dns }}"
+    state: absent
+  when: ansible_os_family == 'RedHat'
+  become: true
+
+
+- name: Redémarre l'interface réseau (centOS)
+  #service: network restart ### Conflit avec Network-Manager
+  command: "{{ initd_netw }} restart"
+  when: ansible_os_family == 'RedHat'
+  become: true
