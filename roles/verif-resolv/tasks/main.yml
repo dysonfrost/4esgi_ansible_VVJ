@@ -1,8 +1,8 @@
 ---
-- name: Verification de la résolution d'adresses IP
+- name: Verification de la résolution de noms
   debug:
     msg: "{{ lookup('dig', 'google.com') }}"
 
-- name: Vérification de la résolution inverse
+- name: Vérification de la résolution d'adresses IP
   debug:
     msg: "{{ lookup('dig', '8.8.8.8/PTR') }}"
