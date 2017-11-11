@@ -1,7 +1,6 @@
-[dnsservers]
-master ansible_host=192.168.1.10 ansible_port=22
-slave ansible_host=192.168.1.12 ansible_port=22
-# slave2 ansible_host=192.168.1.11 ansible_port=22
+[dnsservers:children]
+master_host
+slave_host
 
 [master_host]
 master ansible_host=192.168.1.10 ansible_port=22

@@ -1,6 +1,6 @@
 ---
 - name: Configuration bind du serveur master
-  hosts: master
+  hosts: master_host
   remote_user: esgi
 
   roles:

@@ -1,6 +1,6 @@
 ---
 - name: Configuration bind du serveur slave
-  hosts: slave
+  hosts: slave_host
   remote_user: esgi
 
   roles:
