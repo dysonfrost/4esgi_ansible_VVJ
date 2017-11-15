@@ -1,0 +1,34 @@
+---
+- name: Vérification de la présence de bind (Debian)
+  shell: |
+    dpkg-query -l bind9;
+    sleep 3
+  become: true
+  register: resultat_bind_deb
+  failed_when: false
+  when: ansible_os_family == 'Debian'
+
+- name: Installation du paquet bind s'il n'est pas installé (Debian)
+  apt:
+    name: "{{ deb_pkg }}"
+    state: latest
+  become: true
+  with_items: "{{ deb_pkg }}"
+  when: "ansible_os_family == 'Debian' and resultat_bind_deb.stdout.find('no packages found') != 1"
+
+- name: Vérification de la présence de bind (CentOS)
+  shell: |
+    rpm -q bind;
+    sleep 3
+  become: true
+  register: resultat_bind_centos
+  failed_when: false
+  when: ansible_os_family == 'RedHat'
+
+- name: Installation du paquet bind s'il n'est pas installé (CentOS)
+  yum:
+    name: "{{ centos_pkg }}"
+    state: latest
+  become: true
+  with_items: "{{ centos_pkg }}"
+  when: "ansible_os_family == 'RedHat' and resultat_bind_centos.stdout.find('is not installed') != 1"

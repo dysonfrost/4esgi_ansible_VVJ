@@ -5,10 +5,12 @@
   become_user: root
 
   roles:
+    - ping
     - sources
     - sudo
     - ssh
     - utils
+    - install-bind
     - firewall
     - resolv
     - bind-default

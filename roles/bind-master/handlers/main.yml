@@ -1,8 +1,8 @@
 ---
-- name: bind9 reload
+- name: bind9 restart
   service:
     name: bind9
-    state: reloaded
+    state: restarted
   become: true
   when: ansible_os_family == 'Debian'
 

@@ -7,6 +7,7 @@ umask: 0750
 
 bind_dir: /etc/bind
 named_dir: /var/named
+named_parse: /etc/named
 namedfile_local_deb: /etc/bind/named.conf.local
 namedfile_local_centos: /etc/named.conf.local
 namedfile_centos: /etc/named.conf

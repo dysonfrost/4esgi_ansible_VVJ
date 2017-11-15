@@ -1,0 +1,7 @@
+deb_pkg:
+  - bind9
+  - dnsutils
+
+centos_pkg:
+  - bind
+  - bind-utils

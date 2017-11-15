@@ -1,12 +1,8 @@
 ---
 centos_pkg:
   - vim
-  - bind
-  - bind-utils
   - iptables-services
 
 deb_pkg:
   - vim
-  - bind9
-  - dnsutils
   - iptables-persistent

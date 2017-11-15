@@ -1,2 +1,8 @@
 centos_log: /var/log/messages
 deb_log: /var/log/syslog
+centos_db_dom_lan: /var/named/db.mondomaine.lan
+centos_db_dom_lan_inv: /var/named/db.mondomaine.lan.inv
+deb_db_dom_lan: /etc/bind/db.mondomaine.lan
+deb_db_dom_lan_inv: /etc/bind/db.mondomaine.lan.inv
+file_dom_lan: db.mondomaine.lan
+file_dom_lan_inv: db.mondomaine.lan.inv

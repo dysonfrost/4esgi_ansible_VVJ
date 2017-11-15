@@ -1,0 +1,23 @@
+---
+- name: Vérifie la connectivité des serveurs vers internet
+  shell: |
+    ping -c 4 8.8.8.8
+  register: resultat_ping
+  failed_when: false
+
+- name:  Résultat du ping des serveurs vers internet
+  when: "resultat_ping.stdout.find('4 received') != -1"
+  debug:
+    msg: "PING vers internet OK"
+
+- name: Vérifie la connectivité entre les deux serveurs
+  shell: |
+    ping -c 4 {{ hostvars["slave"]["ansible_default_ipv4"]["address"] }}
+  register: resultat_ping_ms2sl
+  failed_when: false
+  when: "'master_host' in group_names"
+
+- name:  Résultat du ping entre les serveurs
+  when: "'master_host' in group_names and resultat_ping_ms2sl.stdout.find('4 received') != -1"
+  debug:
+    msg: "PING entre les serveurs OK"

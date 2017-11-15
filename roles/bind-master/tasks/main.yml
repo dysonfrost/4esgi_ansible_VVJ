@@ -43,7 +43,27 @@
     owner: "{{ bind_user }}"
     group: "{{ bind_group }}"
   become: true
-  notify: bind9 reload
+  when: ansible_os_family == 'Debian'
+
+
+- name: Parse le fichier de configuration {{ namedfile_local_deb }}  (Debian)
+  shell: |
+    named-checkconf {{ namedfile_local_deb }}
+  become: true
+  register: resultat_bind_deb
+  failed_when: false
+  when: ansible_os_family == 'Debian'
+
+- name:  Résultat du parsage du fichier de configuration (Debian)
+  when: "ansible_os_family == 'Debian' and resultat_bind_deb.stdout.find('{{ namedfile_local_deb }}') < 1"
+  debug:
+    msg: "Le fichier de configuration {{ namedfile_local_deb }} est correctement parsé"
+
+- name: Redémarre le service bind (Debian)
+  shell: sleep 3; systemctl restart bind9
+  async: 1
+  poll: 0
+  become: true
   when: ansible_os_family == 'Debian'
 
 - name: "{{ named_user }} devient compte de service (CentOS)"
@@ -63,9 +83,23 @@
   become: true
   when: ansible_os_family == 'RedHat'
 
+- name: Parse le fichier de configuration {{ namedfile_centos }}  (CentOS)
+  shell: |
+    named-checkconf {{ namedfile_centos }};
+    named-checkconf {{ namedfile_local_centos }}
+  become: true
+  register: resultat_bind_centos
+  failed_when: false
+  when: ansible_os_family == 'RedHat'
+
+- name:  Résultat du parsage des fichiers de configuration (Debian)
+  when: "ansible_os_family == 'RedHat' and resultat_bind_centos.stdout.find('{{ named_parse }}') < 1"
+  debug:
+    msg: "Les fichiers de configuration {{ namedfile_centos }} et {{ namedfile_local_centos }} sont correctement parsés"
+
 - name: Active puis démarre le service named (CentOS)
   shell: sleep 3; systemctl enable named; sleep 3; systemctl start named
   async: 1
   poll: 0
   become: true
-  when: ansible_os_family =='RedHat'
+  when: ansible_os_family == 'RedHat'
