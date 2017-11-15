@@ -7,4 +7,3 @@ master ansible_host=192.168.1.10 ansible_port=22
 
 [slave_host]
 slave ansible_host=192.168.1.12 ansible_port=22
-# slave2 ansible_host=192.168.1.11 ansible_port=22
