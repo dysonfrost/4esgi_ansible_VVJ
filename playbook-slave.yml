@@ -4,6 +4,6 @@
   remote_user: esgi
 
   roles:
-    - bind-slave
+    - 11_bind-slave
 
 ...

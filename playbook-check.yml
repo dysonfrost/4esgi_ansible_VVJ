@@ -4,7 +4,7 @@
   remote_user: esgi
 
   roles:
-    - verif-zones
-    - verif-resolv
+    - 12_verif-zones
+    - 13_verif-resolv
 
 ...

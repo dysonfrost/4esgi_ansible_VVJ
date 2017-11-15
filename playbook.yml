@@ -5,15 +5,15 @@
   become_user: root
 
   roles:
-    - ping
-    - sources
-    - sudo
-    - ssh
-    - utils
-    - install-bind
-    - firewall
-    - resolv
-    - bind-default
+    - 01_ping
+    - 02_sources
+    - 03_sudo
+    - 04_ssh
+    - 05_utils
+    - 06_install-bind
+    - 07_firewall
+    - 08_resolv
+    - 09_bind-default
 
 - import_playbook: playbook-master.yml
 - import_playbook: playbook-slave.yml
