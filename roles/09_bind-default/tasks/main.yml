@@ -9,7 +9,7 @@
     dest: "{{ db_mondomainelan_deb }}"
     force: yes
   become: true
-  when: "db_mondomaine_deb.stat.exists == False and 'master_host' in group_names and ansible_os_family == 'Debian'"
+  when: "db_mondomaine_deb.stat.exists == False and ansible_os_family == 'Debian'"
 
 - stat:
     path: "{{ db_mondomainelan_inv_deb }}"
@@ -21,7 +21,7 @@
     dest: "{{ db_mondomainelan_inv_deb }}"
     force: yes
   become: true
-  when: "'master_host' in group_names and db_mondomaine_inv_deb.stat.exists == False and ansible_os_family == 'Debian'"
+  when: "db_mondomaine_inv_deb.stat.exists == False and ansible_os_family == 'Debian'"
 
 - stat:
     path: "{{ db_mondomainelan_centos }}"
@@ -33,7 +33,7 @@
     dest: "{{ db_mondomainelan_centos }}"
     force: yes
   become: true
-  when: "'master_host' in group_names and db_mondomaine_lan_centos.stat.exists == False and ansible_os_family == 'RedHat'"
+  when: "db_mondomaine_lan_centos.stat.exists == False and ansible_os_family == 'RedHat'"
 
 - stat:
     path: "{{ db_mondomainelan_inv_centos }}"
@@ -45,7 +45,7 @@
     dest: "{{ db_mondomainelan_inv_centos }}"
     force: yes
   become: true
-  when: "'master_host' in group_names and db_mondomaine_lan_inv_centos.stat.exists == False and ansible_os_family == 'RedHat'"
+  when: "db_mondomaine_lan_inv_centos.stat.exists == False and ansible_os_family == 'RedHat'"
 
 - stat:
     path: "{{ namedfile_local }}"
