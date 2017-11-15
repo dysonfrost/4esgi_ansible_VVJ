@@ -1,19 +1,15 @@
-################################################################################################################################
 #  Projet ansible                                                                                                              #
 #  Auteur: Jérémy REISSER                                                                                                      #
 #  Date: 15 nov. 2017                                                                                                          #
 #                                                                                                                              #
 #  Description:                                                                                                                #
-#                                                                                                                              #
-#  Ce script ansible permet de déployer 2 serveurs DNS bind (Primaire/Secondaire) avec un transfert de zone.                   #
-#  Il est capable de s'adapter en fonction de la distribution du serveur (RedHat ou Debian).                                   #
-#  Un firewall iptables à été configuré pour laisser les ports 22(tcp),80(tcp),443(tcp) et 53(tcp/udp) ouverts.                #
-#  Un compte de service bind a été créé afin de chroot sur le répertoire qui contient les fichiers de configuration.           #
-#  Plusieurs tests sont présents tout au long du déroulement du script avec l'affichage d'un message en mode debug             #
-#  afin de cibler plus facilement tout problème de configuration.                                                              #
-#                                                                                                                              #
-################################################################################################################################
-
+#  Ce script ansible permet de déployer 2 serveurs DNS bind (Primaire/Secondaire) avec un transfert de zone.
+#  Il est capable de s'adapter en fonction de la distribution du serveur (RedHat ou Debian).
+#  Un firewall iptables à été configuré pour laisser les ports 22(tcp),80(tcp),443(tcp) et 53(tcp/udp) ouverts.
+#  Un compte de service bind a été créé afin de chroot sur le répertoire qui contient les fichiers de configuration.
+#  Plusieurs tests sont présents tout au long du déroulement du script avec l'affichage d'un message en mode debug
+#  afin de cibler plus facilement tout problème de configuration.
+#
 
 Petite modification à effectuer sur ansible.cfg :
 
